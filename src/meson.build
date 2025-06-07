@@ -1,5 +1,7 @@
 anim_sources = [
     'main.vala',
+    'sys_ui/menu_bar.vala',
+    'sys_ui/rounded.vala'
 ]
 
 anim_deps = [
@@ -12,13 +14,13 @@ anim_deps = [
     dependency('libmutter-16'),
     dependency('X11'),
     xext_dep,
-xfixes,
+    xfixes,
     dependency('gnome-desktop-3.0'),
-dependency('graphene-gobject-1.0'),
+    dependency('graphene-gobject-1.0'),
 ]
 
 executable('anim', anim_sources,
-           dependencies: anim_deps,
-           include_directories: config_inc,
-           install: true,
+           dependencies : anim_deps,
+           include_directories : config_inc,
+           install : true,
 )

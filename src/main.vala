@@ -1,5 +1,6 @@
 public class WindowManagerPanos : Meta.Plugin {
     public Clutter.Stage stage { get; protected set; }
+    public Panos.MenuBar menu_bar;
 
     public override void start () {
         unowned Meta.Display display = get_display ();
@@ -21,11 +22,26 @@ public class WindowManagerPanos : Meta.Plugin {
         // group.set_rotation_angle (Clutter.RotateAxis.X_AXIS, 20.0f);
         // group.set_opacity(128);
 
+        var rectangle = new Clutter.Actor ();
+        rectangle.set_background_color ({ 0xff, 0xff, 0xff, 0xff });
+        rectangle.set_size (200, 150);
+        rectangle.set_position (100, 75);
+
+
+        var effect = new Panos.RoundedClipEffect ();
+        effect.clip_radius = 300.0f;
+
+        // Set bounds relative to the actor
+
+        // rectangle.add_effect (effect);
+
+        stage.add_child (rectangle);
+
         stage.show ();
 
         display.window_created.connect ((display, window) => {
             var window_actor = (Meta.WindowActor) window.get_compositor_private ();
-            window_actor.set_opacity (128);
+            window_actor.add_effect (effect);
         });
     }
 }
