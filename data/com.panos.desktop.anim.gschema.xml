@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+    <schema path="/com/panos/desktop/wm/keybindings/" id="com.panos.desktop.wm.keybindings">
+        <key type="as" name="ctrl-press">
+            <default><![CDATA[['<Ctrl>']]]></default>
+            <summary>Shortcut to move to first workspace</summary>
+            <description></description>
+        </key>
+    </schema>
+</schemalist>
