@@ -1,6 +1,7 @@
 anim_sources = [
     'main.vala',
     'sys_ui/menu_bar.vala',
+    'sys_ui/PauseMenu.vala',
     'sys_ui/rounded.vala'
 ]
 
