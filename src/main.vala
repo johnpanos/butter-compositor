@@ -1,7 +1,7 @@
 public class WindowManagerPanos : Meta.Plugin {
     public Clutter.Stage stage { get; protected set; }
 
-    public override void start() {
+    public override void start () {
         unowned Meta.Display display = get_display ();
 
         stage = display.get_compositor ().get_stage () as Clutter.Stage;
@@ -13,15 +13,20 @@ public class WindowManagerPanos : Meta.Plugin {
         ((Meta.BackgroundContent) background_actor.content).background = system_background;
 
         background_actor.add_constraint (new Clutter.BindConstraint (stage,
-            Clutter.BindCoordinate.ALL, 0));
+                                                                     Clutter.BindCoordinate.ALL, 0));
         stage.insert_child_below (background_actor, null);
 
-        var group = display.get_compositor().get_window_group();
+        var group = display.get_compositor ().get_window_group ();
 
-        //group.set_rotation_angle (Clutter.RotateAxis.X_AXIS, 20.0f);
-        //group.set_opacity(128);
+        // group.set_rotation_angle (Clutter.RotateAxis.X_AXIS, 20.0f);
+        // group.set_opacity(128);
 
         stage.show ();
+
+        display.window_created.connect ((display, window) => {
+            var window_actor = (Meta.WindowActor) window.get_compositor_private ();
+            window_actor.set_opacity (128);
+        });
     }
 }
 
@@ -32,7 +37,7 @@ int main (string[] args) {
 
     stdout.printf ("string format");
 
-    Meta.Context ctx = new Meta.Context("panos");
+    Meta.Context ctx = new Meta.Context ("panos");
 
     try {
         ctx.configure (ref args);
