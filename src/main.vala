@@ -1,6 +1,5 @@
 public class WindowManagerPanos : Meta.Plugin {
     public Clutter.Stage stage { get; protected set; }
-    public Panos.MenuBar menu_bar;
 
     Clutter.Actor window_actor;
 
@@ -24,17 +23,9 @@ public class WindowManagerPanos : Meta.Plugin {
         group.add_constraint (new Clutter.BindConstraint (stage,
                                                           Clutter.BindCoordinate.ALL, 0));
 
-        var rectangle = new Clutter.Actor ();
-        rectangle.set_background_color ({ 0xff, 0xff, 0xff, 0xff });
-        rectangle.set_size (200, 64);
-        rectangle.set_position (16, 16);
-
-        rectangle.add_constraint (new Clutter.BindConstraint (stage,
-                                                              Clutter.BindCoordinate.WIDTH, -32));
-
-
-        var effect = new Panos.RoundedClipEffect ();
-        effect.clip_radius = 48.0f;
+        var launcher = new Panos.Launcher ();
+        launcher.add_constraint (new Clutter.BindConstraint (stage,
+                                                             Clutter.BindCoordinate.ALL, 0));
 
         var pause_menu = new Panos.PauseMenu (group);
 
@@ -43,6 +34,8 @@ public class WindowManagerPanos : Meta.Plugin {
             pause_menu.toggle ();
         });
 
+        stage.add_child (launcher);
+        launcher.show ();
         stage.show ();
 
         display.window_created.connect ((display, window) => {

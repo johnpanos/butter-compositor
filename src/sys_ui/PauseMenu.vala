@@ -28,6 +28,7 @@ namespace Panos {
             transition.add_transition(scale_y);
             transition.add_transition(translation_x);
             transition.set_auto_reverse(true);
+            transition.stop();
 
             this.actor.add_transition("pause-menu", transition);
         }
