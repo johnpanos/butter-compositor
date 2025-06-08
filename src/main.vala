@@ -2,6 +2,7 @@ public class WindowManagerPanos : Meta.Plugin {
     public Clutter.Stage stage { get; protected set; }
 
     Clutter.Actor window_actor;
+    SwitchLauncherApp app;
 
     public override void start () {
         unowned Meta.Display display = get_display ();
@@ -19,23 +20,10 @@ public class WindowManagerPanos : Meta.Plugin {
         stage.insert_child_below (background_actor, null);
 
         var group = display.get_compositor ().get_window_group ();
-
         group.add_constraint (new Clutter.BindConstraint (stage,
                                                           Clutter.BindCoordinate.ALL, 0));
 
-        var launcher = new Panos.Launcher ();
-        launcher.add_constraint (new Clutter.BindConstraint (stage,
-                                                             Clutter.BindCoordinate.ALL, 0));
-
-        var pause_menu = new Panos.PauseMenu (group);
-
-        var keybinding_settings = new GLib.Settings ("com.panos.butter.wm.keybindings");
-        display.add_keybinding ("ctrl-press", keybinding_settings, Meta.KeyBindingFlags.IGNORE_AUTOREPEAT, (a, b, c) => {
-            pause_menu.toggle ();
-        });
-
-        stage.add_child (launcher);
-        launcher.show ();
+        app = new SwitchLauncherApp (stage);
         stage.show ();
 
         display.window_created.connect ((display, window) => {
